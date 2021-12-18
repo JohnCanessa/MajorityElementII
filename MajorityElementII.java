@@ -52,11 +52,11 @@ public class MajorityElementII {
         for (Map.Entry<Integer, Integer> e : freqs.entrySet()) {
 
             // **** for ease of use ****
-            int key = e.getKey();
-            int val = e.getValue();
+            // int key = e.getKey();
+            // int val = e.getValue();
 
-            // **** add key to list (if needed) ****
-            if (val > floor) lst.add(key);
+            // **** add this key to the output list (if needed) ****
+            if ( e.getValue() > floor) lst.add(e.getKey());
         }
 
         // **** return list of keys that met the floor condition ****
@@ -81,19 +81,17 @@ public class MajorityElementII {
 
         // **** initialization ****
         int n               = nums.length;
-        List<Integer> lst   = new ArrayList<>();
-
-        // int floor        = (int)Math.floor(n / 3);
         int floor           = n / 3;
+        List<Integer> lst   = new ArrayList<>();
 
         // ???? ????
         System.out.println("<<<     n: " + n);
         System.out.println("<<< floor: " + floor);
 
-        int n1  = -1;
+        int n1  = 0;
         int c1  = 0;
 
-        int n2  = -1;
+        int n2  = 0;
         int c2  = 0;
 
         // **** algorithm first pass - O(n) ****
@@ -128,7 +126,10 @@ public class MajorityElementII {
             }          
         }
 
-        // **** algorithm second pass - O(n) ****
+        // ???? ????
+        System.out.println("<<<  after first pass n1: " + n1 + " c1: " + c1 + " n2: " + n2 + " c2: " + c2);
+
+        // **** verify that elements found in the first pass are a majority - O(n) ****
         c1 = 0; c2 = 0;
         for (int num : nums){
             if (num == n1) c1++;
@@ -136,9 +137,9 @@ public class MajorityElementII {
         }
 
         // ???? ????
-        System.out.println("<<< " + n1 + "=" + c1 + ", " + n2 + "=" + c2);
+        System.out.println("<<< after second pass n1: " + n1 + " c1: " + c1 + " n2: " + n2 + " c2: " + c2);
 
-        // **** found single element ****
+        // **** found single majority element ****
         if (n1 == n2) {
             lst.add(n1);
             return lst;
@@ -150,13 +151,14 @@ public class MajorityElementII {
         // **** found n2 ****
         if (c2 > floor) lst.add(n2);
 
-        // **** return list of keys that met the floor condition ****
+        // **** return list majority elements ****
         return lst;
     }
 
 
     /**
      * Test scaffold.
+     * !!! NOT PART OF SOLUTION !!!
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
@@ -176,11 +178,11 @@ public class MajorityElementII {
         System.out.println("main <<< nums: " + Arrays.toString(nums));
 
         // **** call function of interest and display output ****
-        System.out.println("main <<< output: " + majorityElement0(nums).toString());
+        System.out.println("main <<< majorityElement0: " + majorityElement0(nums).toString());
 
        // **** call function of interest and display output ****
        List<Integer> lst = majorityElement(nums);
        Collections.sort(lst);
-       System.out.println("main <<< output: " + lst.toString());
+       System.out.println("main <<<  majorityElement: " + lst.toString());
     }
 }
